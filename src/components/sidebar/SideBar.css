@@ -1,0 +1,16 @@
+.left{
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    background-color: #e8e8e8;
+    min-height: 100vh;
+}
+.link{
+    text-decoration: none;
+    color:rgb(88, 80, 80);
+}
+h6{
+    font-family: 'Roboto', sans-serif;
+    position:relative;
+}
+

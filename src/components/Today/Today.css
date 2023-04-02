@@ -1,0 +1,23 @@
+.form-button{
+    float:right;
+}
+.todayp{
+    position: relative;
+}
+.categorytoday{
+    position: absolute;
+    margin-left: 600px;
+    margin-top: -15px;
+}
+.prioritytoday{
+    position: absolute;
+    margin-left: 500px;
+    margin-top: -15px;
+}
+.today{
+    min-height: 100vh;
+}
+.delete{
+    position: absolute;
+    margin-left: 700px;
+}
