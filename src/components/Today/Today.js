@@ -45,9 +45,6 @@ function Today() {
       .then(res => {
         console.log(res);
         console.log(res.data);
-
-        const posts = this.state.posts.filter(item => item.id !== id);
-        this.setState({ posts });
       })
   }
   let navigate = useNavigate()
