@@ -91,8 +91,8 @@ function Today() {
           ))
         }
       </div>
-      <form onSubmit={handleSubmit(addTask)} className='form-today form w-75' action="">
-        <div className="d-flex">
+      <form onSubmit={handleSubmit(addTask)} className='form-today form w-75 mt-2 flex flex-wrap' action="">
+        <div className="d-flex gap-2">
         <div className=" divPriority">
           <select class="form-select form-select-sm prioritySelect " aria-label=".form-select-sm example" {...register("Priority", { required: true })}>
             <option selected disabled value="">Select Priority</option>
@@ -119,7 +119,7 @@ function Today() {
         <button type='submit' className='btn btn-primary form-button'>Add Task</button>
       </form>
       {/* <button onClick={cancelTask} className='btn btn-secondary form-button2 me-3'>Cancel</button> */}
-      <img src="https://thumbs.dreamstime.com/b/beautiful-rain-forest-ang-ka-nature-trail-doi-inthanon-national-park-thailand-36703721.jpg" className=' me-3' alt="" width={200}/>
+
 
       <h1 className='mt-5'>Completed</h1>
       {
