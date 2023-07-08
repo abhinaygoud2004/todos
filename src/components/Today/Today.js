@@ -1,53 +1,45 @@
 import React from 'react'
 import { useContext } from 'react';
-import { useEffect } from 'react';
 import { AiOutlineDelete } from "react-icons/ai";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Dropdown from 'react-bootstrap/Dropdown';
 import './Today.css'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { TodosContext } from '../../contexts/TodoListProvider';
 
 function Today() {
   let [completed, setCompleted] = useState([])
   let [todaytasks, setToday] = useState([])
-  let modifiedArr = todaytasks;
   let isCompleted = (id) => {
-    let ind = 0;
-    for (let ele in modifiedArr) {
-      if (ele.id == id) {
-        modifiedArr.splice(ind, 1)
-        console.log(id);
-        setToday(modifiedArr);
-      }
-      ind++;
-    }
     axios.put(`http://localhost:3001/update/${id}`)
       .then(res => {
         console.log(res);
-        console.log(res.data);;
+        console.log(res.data);
       })
-    axios.get("http://localhost:3001/completed")
-      .then(response => {
-        if (response.status === 200) {
-          setCompleted(response.data)
-          console.log(response.data)
-        }
-      })
-      .catch(err => {
-        console.log(err)
-      })
+      getTodos();
+      funCompleted();
   }
+  let funCompleted=()=>{
+    axios.get("http://localhost:3001/completed")
+    .then(response => {
+      if (response.status === 200) {
+        setCompleted(response.data)
+        console.log(response.data)
+      }
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  }
+    useEffect(()=>{
+     funCompleted();
+    },[])
   let deleteTask = (id) => {
     axios.delete(`http://localhost:3001/delete/${id}`)
       .then(res => {
         console.log(res);
         console.log(res.data);
-
-        const posts = this.state.posts.filter(item => item.id !== id);
-        this.setState({ posts });
       })
   }
   let navigate = useNavigate()
@@ -60,6 +52,19 @@ function Today() {
   let cancelTask = () => {
     navigate('/')
   }
+  let getTodos=()=>{
+    axios.get("http://localhost:3001/today")
+      .then(response => {
+        if (response.status === 200) {
+          setToday(response.data)
+          console.log(response.data)
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
   return (
     <div className='today'>
 
@@ -67,16 +72,7 @@ function Today() {
       <div className="">
         {
           useEffect(() => {
-            axios.get("http://localhost:3001/today")
-              .then(response => {
-                if (response.status === 200) {
-                  setToday(response.data)
-                  console.log(response.data)
-                }
-              })
-              .catch(err => {
-                console.log(err)
-              })
+            getTodos();
           }, [])
         }
         {
@@ -87,9 +83,7 @@ function Today() {
                   <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="true" onClick={() => isCompleted(todaytask.id)} />
                   <label className="form-check-label" for="inlineCheckbox1"><h4>{todaytask.task}</h4></label>
                 </form>
-
               </div>
-
                 <p className='prioritytoday'>{todaytask.priority}</p>
                 <p className='categorytoday'>{todaytask.category}</p></div>
               <button onClick={() => deleteTask(todaytask.id)} className='btn fs-4 delete'><span><AiOutlineDelete /></span></button>
@@ -98,8 +92,9 @@ function Today() {
         }
       </div>
       <form onSubmit={handleSubmit(addTask)} className='form-today form w-75' action="">
-        <div className="mt-5">
-          <select class="form-select form-select-sm" aria-label=".form-select-sm example" {...register("Priority", { required: true })}>
+        <div className="d-flex">
+        <div className=" divPriority">
+          <select class="form-select form-select-sm prioritySelect " aria-label=".form-select-sm example" {...register("Priority", { required: true })}>
             <option selected disabled value="">Select Priority</option>
             <option value="High">High</option>
             <option value="Medium">Medium</option>
@@ -107,12 +102,13 @@ function Today() {
           </select>
         </div>
         {errors.Priority?.type === "required" && <p className='text-danger fw-bold'>*Priority is required</p>}
-        <div className="mt-3">
-          <select class="form-select form-select-sm" aria-label=".form-select-sm example" {...register("Category", { required: true })}>
+        <div className="">
+          <select class="form-select form-select-sm  category justify-evenly" aria-label=".form-select-sm example" {...register("Category", { required: true })}>
             <option selected disabled value="">Select Category</option>
             <option value="Personal">Personal</option>
             <option value="Professional">Professional</option>
           </select>
+        </div>
         </div>
         {errors.Category?.type === "required" && <p className='text-danger fw-bold'>*Category is required</p>}
         <div className='mt-3 form-floating'>
@@ -122,13 +118,14 @@ function Today() {
         {errors.task?.type === "required" && <p className='text-danger fw-bold'>*task is required</p>}
         <button type='submit' className='btn btn-primary form-button'>Add Task</button>
       </form>
-      <button onClick={cancelTask} className='btn btn-secondary form-button2 me-3'>Cancel</button>
+      {/* <button onClick={cancelTask} className='btn btn-secondary form-button2 me-3'>Cancel</button> */}
+      <img src="https://thumbs.dreamstime.com/b/beautiful-rain-forest-ang-ka-nature-trail-doi-inthanon-national-park-thailand-36703721.jpg" className=' me-3' alt="" width={200}/>
 
       <h1 className='mt-5'>Completed</h1>
       {
         completed.map((completed) => (
           <div className="border border-2 mt-1 p-2 w-75 todayp d-flex gap-5">
-            <div className="w-50">            <div className="form-check form-check-inline">
+            <div className="w-50"><div className="form-check form-check-inline">
               <form action="">
                 <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="true" onClick={() => isCompleted(completed.id)} />
                 <label className="form-check-label" for="inlineCheckbox1"><h4>{completed.task}</h4></label>

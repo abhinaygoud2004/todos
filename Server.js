@@ -46,7 +46,7 @@ app.get('/today', (req, res) => {
 })
 
 app.get('/completed', (req, res) => {
-  db.query("SELECT *from TodoTable WHERE status=?", "completed", (err, result) => {
+  db.query("SELECT *from TodoTable WHERE status=?","completed", (err, result) => {
     if (err) {
       console.log(err);
     }
@@ -123,9 +123,6 @@ app.delete("/delete/:id", (req, res) => {
 });
 
 
-
-
-
 app.put("/update/:id", (req, res) => {
   const id = req.params.id;
   db.query(
@@ -140,7 +137,6 @@ app.put("/update/:id", (req, res) => {
     }
   );
 });
-
 
 const path = require("path");
 //connect react build

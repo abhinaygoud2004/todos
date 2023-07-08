@@ -1,9 +1,6 @@
 .form-button{
     float:right;
 }
-.todayp{
-    position: relative;
-}
 .categorytoday{
     position: absolute;
     margin-left: 600px;
@@ -21,3 +18,17 @@
     position: absolute;
     margin-left: 700px;
 }
+/* .PrioritySelect{
+    position:absolute;
+    right: 20px;
+    
+
+}
+.divPriority{
+    position:relative;
+} */
+/* .category{
+    position:absolute;
+    top: 225px;
+    right:20px
+} */

@@ -1,5 +1,4 @@
 import React, { Children } from 'react'
-import SideBar from './components/sidebar/SideBar'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import RootLayout from './RootLayout'
 import High from './components/High/High'
